@@ -43,9 +43,9 @@ function init() {
         points.setHead(new Point(p.x, p.y));
         joints.clear();
         lines.clear();
-        for (let i = 0; i < points.bone.length - 1; i++){
-            const b = points.bone[i];
-            const nb = points.bone[i + 1];// 次の関節
+        for (let i = 0; i < points.joints.length - 1; i++){
+            const b = points.joints[i];
+            const nb = points.joints[i + 1];// 次の関節
             const bd = b.distance(nb);
             const vx = (b.x - nb.x) / bd;
             const vy = (b.y - nb.y) / bd;
@@ -58,7 +58,7 @@ function init() {
             joints.beginFill(0xCCCCCC);
             joints.drawCircle(nb.x, nb.y, bodyWidth / 2);
         };
-        points.rawPoints.forEach((p, i) => {
+        points.points.forEach((p, i) => {
             if (i == 0) {
                 lines.moveTo(p.x, p.y);
                 return;
@@ -76,7 +76,7 @@ class Point {
         this.x = x;
         this.y = y;
     }
-    public distance(p: Point):number {
+    public distance(p: Point): number {
         const dx = p.x - this.x;
         const dy = p.y - this.y;
         return Math.sqrt(dx * dx + dy * dy);
@@ -88,58 +88,58 @@ class Point {
 class Points {
     private _length: number;
     private _spaces: number[];
-    private _bone: Array<Point>;
-    private _rawPoints: Array<Point>;
+    private _joints: Array<Point>;
+    private _points: Array<Point>;
     constructor(length: number, spaces: number[]) {
         this._length = length;
         this._spaces = spaces;
-        this._bone = [];
-        this._rawPoints = [];
+        this._joints = [];
+        this._points = [];
         for (let i = 0; i < length; i++) {
-            this._bone.push(new Point(0, 0));
+            this._joints.push(new Point(0, 0));
         }
     }
     public setHead(pos: Point) {
-        this._rawPoints.unshift(pos);
-        this.updateBone();
+        this._points.unshift(pos);
+        this.updateJoints();
     }
-    private updateBone() {
-        if (this._rawPoints.length < 2) return;
-        this._bone[0] = this._rawPoints[0].clone();
-        let pp: Point = this._rawPoints[0].clone();
-        let ci: number = 1;
+    private updateJoints() {
+        if (this._points.length < 2) return;
+        this._joints[0] = this._points[0].clone();
+        let beginPoint: Point = this._points[0].clone();
+        let beginPointIndex: number = 1;
         let completed = 0;
-        for (let bi = 1; bi < this._bone.length; bi++) {
-            let cd: number = 0;
-            const b = this._bone[bi];
-            const space = this._spaces[bi - 1];
-            for (let ri = ci; ri < this._rawPoints.length; ri++) {
-                const rp = this._rawPoints[ri];
-                const pcd = cd;
-                cd += pp.distance(rp);
-                if (cd > space) {
-                    const dd = space - pcd;
-                    const rpd = rp.distance(pp);
-                    pp.x += (rp.x - pp.x) / rpd * dd;
-                    pp.y += (rp.y - pp.y) / rpd * dd;
-                    b.x = pp.x;
-                    b.y = pp.y;
-                    ci = ri;
-                    completed++;
-                    break;
+        for (let ji = 1; ji < this._joints.length; ji++) {
+            let currentDistance: number = 0;
+            const joint = this._joints[ji];
+            const space = this._spaces[ji - 1];
+            for (let pi = beginPointIndex; pi < this._points.length; pi++) {
+                const point = this._points[pi];
+                const distance = beginPoint.distance(point);
+                if (currentDistance + distance < space) {
+                    currentDistance += distance;
+                    beginPoint = point.clone();
+                    continue;
                 }
-                pp = rp.clone();
+                const diffDistance = space - currentDistance;
+                const ppDistance = point.distance(beginPoint);
+                beginPoint.x += (point.x - beginPoint.x) / ppDistance * diffDistance;
+                beginPoint.y += (point.y - beginPoint.y) / ppDistance * diffDistance;
+                joint.x = beginPoint.x;
+                joint.y = beginPoint.y;
+                beginPointIndex = pi;
+                completed++;
             }
         }
         if (completed == this._length - 1) {
-            this._rawPoints.length = ci + 1;
+            this._points.length = beginPointIndex + 1;
         }
     }
-    public get bone() {
-        return this._bone;
+    public get joints() {
+        return this._joints;
     }
-    public get rawPoints() {
-        return this._rawPoints;
+    public get points() {
+        return this._points;
     }
 }
 function randomRange(min: number, max: number) {
