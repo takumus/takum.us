@@ -4,8 +4,7 @@ import { Body } from './body';
 function init() {
     console.log("init");
     const app = new PIXI.Application({
-        width: 512,
-        height: 512,
+        view: document.querySelector("#canvas"),
         resolution: window.devicePixelRatio
     });
     const background = new PIXI.Graphics();

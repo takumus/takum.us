@@ -10,9 +10,6 @@ export class Point {
         const dy = p.y - this.y;
         return Math.sqrt(dx * dx + dy * dy);
     }
-    public vector(p: Point) {
-        return new Point(p.x - this.x, p.y - this.y);
-    }
     public clone() {
         return new Point(this.x, this.y);
     }
