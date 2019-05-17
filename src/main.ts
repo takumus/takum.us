@@ -10,13 +10,21 @@ function init() {
     const background = new PIXI.Graphics();
     const joints = new PIXI.Graphics();
     const lines = new PIXI.Graphics();
-    const points = new Body(8, [
+    const points = new Body(16, [
         60,
         30,
         30,
         60,
         30,
         30,
+        60,
+        60,
+        30,
+        30,
+        60,
+        30,
+        30,
+        60,
         60
     ]);// 関節数, 関節間隔
     const bodyWidth = 16;
@@ -65,8 +73,32 @@ function init() {
             }
             lines.lineTo(p.x, p.y);
         });
+
+        
+        const r = saiShow2joeFor(points.joints);
+        for (let i = 0; i < 1600; i++){
+            const y = r.a * i + r.b;
+            if (i == 0) {
+                lines.moveTo(i, y);
+            }
+            lines.lineTo(i, y);
+        }
     }
     addPoint({ x: 10, y: 10 });
     addPoint({ x: 400, y: 400 });
+}
+
+function saiShow2joeFor(points: Point[]) {
+    const n = points.length;
+    const sXY = sigma((p) => p.x * p.y, points);
+    const sX = sigma((p) => p.x, points);
+    const sY = sigma((p) => p.y, points);
+    const sXX = sigma((p) => p.x * p.x, points);
+    const a = (n * sXY - sX * sY) / (n * sXX - (sX * sX));
+    const b = (sXX * sY - sXY * sX) / (n * sXX - (sX * sX));
+    return { a , b };
+}
+function sigma<T>(func: (obj: T) => number, objs: T[]) {
+    return objs.map(func).reduce((pv, cv) => pv + cv);
 }
 window.addEventListener("load", init);
