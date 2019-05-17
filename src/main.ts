@@ -81,6 +81,9 @@ class Point {
         const dy = p.y - this.y;
         return Math.sqrt(dx * dx + dy * dy);
     }
+    public vector(p: Point) {
+        return new Point(p.x - this.x, p.y - this.y);
+    }
     public clone() {
         return new Point(this.x, this.y);
     }
@@ -113,22 +116,22 @@ class Points {
             let currentDistance: number = 0;
             const joint = this._joints[ji];
             const space = this._spaces[ji - 1];
-            for (let pi = beginPointIndex; pi < this._points.length; pi++) {
-                const point = this._points[pi];
-                const distance = beginPoint.distance(point);
-                if (currentDistance + distance < space) {
-                    currentDistance += distance;
-                    beginPoint = point.clone();
-                    continue;
+            for (let ri = beginPointIndex; ri < this._points.length; ri++) {
+                const point = this._points[ri];
+                const prevDistance = currentDistance;
+                currentDistance += beginPoint.distance(point);
+                if (currentDistance > space) {
+                    const magnitude = space - prevDistance;
+                    const distance = point.distance(beginPoint);
+                    beginPoint.x += (point.x - beginPoint.x) / distance * magnitude;
+                    beginPoint.y += (point.y - beginPoint.y) / distance * magnitude;
+                    joint.x = beginPoint.x;
+                    joint.y = beginPoint.y;
+                    beginPointIndex = ri;
+                    completed++;
+                    break;
                 }
-                const diffDistance = space - currentDistance;
-                const ppDistance = point.distance(beginPoint);
-                beginPoint.x += (point.x - beginPoint.x) / ppDistance * diffDistance;
-                beginPoint.y += (point.y - beginPoint.y) / ppDistance * diffDistance;
-                joint.x = beginPoint.x;
-                joint.y = beginPoint.y;
-                beginPointIndex = pi;
-                completed++;
+                beginPoint = point.clone();
             }
         }
         if (completed == this._length - 1) {
