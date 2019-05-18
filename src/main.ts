@@ -62,14 +62,19 @@ function init() {
             ]);
             joints.beginFill(0xCCCCCC, 0.3);
             joints.drawCircle(nb.x, nb.y, bodyWidth / 2);
-        };
-        
-        const bp = body.joints[2];
-        const ep = body.joints[1];
-        const ep2 = body.joints[1];
-        
-        console.log(bp);
 
+            const w = 40;
+            const rp = new Point(
+                b.x + b.vy * w,
+                b.y - b.vx * w
+            );
+            const lp = new Point(
+                b.x - b.vy * w,
+                b.y + b.vx * w
+            );
+            lines.moveTo(rp.x, rp.y);
+            lines.lineTo(lp.x, lp.y);
+        };
         body.points.forEach((p, i) => {
             if (i == 0) {
                 lines.moveTo(p.x, p.y);
