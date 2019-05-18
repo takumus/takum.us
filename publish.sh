@@ -1,1 +1,0 @@
-scp -P 18769 ./dist/* takumus@takum.us:~/site/
