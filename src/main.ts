@@ -10,7 +10,7 @@ function init() {
     const background = new PIXI.Graphics();
     const joints = new PIXI.Graphics();
     const lines = new PIXI.Graphics();
-    const points = new Body(16, [
+    const body = new Body(16, [
         60,
         30,
         30,
@@ -48,25 +48,29 @@ function init() {
         if (dragging) addPoint(e.data.global);
     });
     function addPoint(p: {x: number, y: number}) {
-        points.setHead(new Point(p.x, p.y));
+        body.setHead(new Point(p.x, p.y));
         joints.clear();
         lines.clear();
-        for (let i = 0; i < points.joints.length - 1; i++){
-            const b = points.joints[i];
-            const nb = points.joints[i + 1];// 次の関節
-            const bd = b.distance(nb);
-            const vx = (b.x - nb.x) / bd;
-            const vy = (b.y - nb.y) / bd;
+        for (let i = 0; i < body.joints.length - 1; i++){
+            const b = body.joints[i];
+            const nb = body.joints[i + 1];// 次の関節
             joints.beginFill(0xCCCCCC, 0.4);
             joints.drawPolygon([
                 b.x, b.y,
-                nb.x + vy * bodyWidth / 2, nb.y - vx * bodyWidth / 2, 
-                nb.x - vy * bodyWidth / 2, nb.y + vx * bodyWidth / 2
+                nb.x + b.vy * bodyWidth / 2, nb.y - b.vx * bodyWidth / 2, 
+                nb.x - b.vy * bodyWidth / 2, nb.y + b.vx * bodyWidth / 2
             ]);
-            joints.beginFill(0xCCCCCC);
+            joints.beginFill(0xCCCCCC, 0.3);
             joints.drawCircle(nb.x, nb.y, bodyWidth / 2);
         };
-        points.points.forEach((p, i) => {
+        
+        const bp = body.joints[2];
+        const ep = body.joints[1];
+        const ep2 = body.joints[1];
+        
+        console.log(bp);
+
+        body.points.forEach((p, i) => {
             if (i == 0) {
                 lines.moveTo(p.x, p.y);
                 return;
@@ -75,14 +79,14 @@ function init() {
         });
 
         
-        const r = saiShow2joeFor(points.joints);
-        for (let i = 0; i < 1600; i++){
-            const y = r.a * i + r.b;
-            if (i == 0) {
-                lines.moveTo(i, y);
-            }
-            lines.lineTo(i, y);
-        }
+        // const r = saiShow2joeFor(points.joints);
+        // for (let i = 0; i < 1600; i++){
+        //     const y = r.a * i + r.b;
+        //     if (i == 0) {
+        //         lines.moveTo(i, y);
+        //     }
+        //     lines.lineTo(i, y);
+        // }
     }
     addPoint({ x: 10, y: 10 });
     addPoint({ x: 400, y: 400 });
