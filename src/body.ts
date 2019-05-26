@@ -1,12 +1,12 @@
 import { Point } from './point';
 export class Body {
     private _length: number;
-    private _spaces: number[];
+    private _space: number;
     private _joints: Array<JointPoint>;
     private _points: Array<Point>;
-    constructor(length: number, spaces: number[]) {
+    constructor(length: number, space: number) {
         this._length = length;
-        this._spaces = spaces;
+        this._space = space;
         this._joints = [];
         this._points = [];
         for (let i = 0; i < length; i++) {
@@ -17,7 +17,7 @@ export class Body {
         this._points.unshift(pos);
         this.updateJoints();
     }
-    private updateJoints() {
+    protected updateJoints() {
         if (this._points.length < 2) return;
         this._joints[0].setFromPoint(this._points[0].clone());
         let beginPoint: Point = this._points[0].clone();
@@ -26,13 +26,12 @@ export class Body {
         for (let ji = 1; ji < this._joints.length; ji++) {
             let currentDistance: number = 0;
             const joint = this._joints[ji];
-            const space = this._spaces[ji - 1];
             for (let ri = beginPointIndex; ri < this._points.length; ri++) {
                 const point = this._points[ri];
                 const prevDistance = currentDistance;
                 currentDistance += beginPoint.distance(point);
-                if (currentDistance > space) {
-                    const magnitude = space - prevDistance;
+                if (currentDistance > this._space) {
+                    const magnitude = this._space - prevDistance;
                     const distance = point.distance(beginPoint);
                     beginPoint.x += (point.x - beginPoint.x) / distance * magnitude;
                     beginPoint.y += (point.y - beginPoint.y) / distance * magnitude;
@@ -67,6 +66,10 @@ export class Body {
     }
     public get points() {
         return this._points;
+    }
+    public get jointCount()
+    {
+        return this._length;
     }
 }
 export class JointPoint extends Point {
