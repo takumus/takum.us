@@ -1,0 +1,36 @@
+{
+  "name": "takum.us",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "start": "npm run serve",
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint"
+  },
+  "dependencies": {
+    "@takumus/three-for-vue": "^1.0.2",
+    "node-sass": "^4.13.1",
+    "sass-loader": "^8.0.2",
+    "socket.io-client": "^2.3.0",
+    "three": "^0.115.0",
+    "vue": "^2.6.11",
+    "vue-class-component": "^7.2.2",
+    "vue-property-decorator": "^8.4.1",
+    "vue-router": "^3.1.5"
+  },
+  "devDependencies": {
+    "@types/socket.io-client": "^1.4.32",
+    "@types/three": "^0.103.2",
+    "@typescript-eslint/eslint-plugin": "^2.18.0",
+    "@typescript-eslint/parser": "^2.18.0",
+    "@vue/cli-plugin-router": "~4.2.0",
+    "@vue/cli-plugin-typescript": "~4.2.0",
+    "@vue/cli-service": "~4.2.0",
+    "@vue/eslint-config-typescript": "^5.0.1",
+    "eslint": "^6.7.2",
+    "eslint-plugin-vue": "^6.1.2",
+    "typescript": "~3.7.5",
+    "vue-template-compiler": "^2.6.11"
+  }
+}
