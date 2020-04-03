@@ -3,8 +3,6 @@
     <h1>☺</h1>
     <RotatingBox></RotatingBox>
     <RotatingBox></RotatingBox>
-    <RotatingBox></RotatingBox>
-    <RotatingBox></RotatingBox>
   </div>
 </template>
 <style lang="scss" scoped>
