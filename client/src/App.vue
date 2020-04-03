@@ -19,7 +19,6 @@
   @include pc {
   };
   @include sp {
-    background-color: blue;
   };
 }
 #nav {
