@@ -29,7 +29,7 @@ export default class Torases extends ThreeForVue {
       this.scene.add(o);
     });
     const light = new THREE.DirectionalLight(0xffffff, 1);
-    light.position.set(-1, 2, 4);
+    light.position.set(0, 0, 4);
     this.scene.add(light);
     // attach
     this.currentScene = this.scene;
@@ -39,6 +39,7 @@ export default class Torases extends ThreeForVue {
     this.camera.lookAt(0, 0, 0);
     this.objs.forEach((o) => {
       o.animate(deltaTime);
+      o.lookAt(0, 0, 0.4);
     });
   }
   public resize(width: number, height: number) {
