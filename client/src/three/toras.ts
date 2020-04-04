@@ -16,15 +16,16 @@ export default class Torases extends ThreeForVue {
     this.camera.position.z = 2;
 
     this.objs = [];
-    this.objs.push(new Toras(32, 3, 0.3, 0.1, 0, new THREE.MeshNormalMaterial()));
-    this.objs.push(new Toras(32, 4, 0.3, 0.1, 1, new THREE.MeshNormalMaterial()));
-    this.objs.push(new Toras(32, 10, 0.3, 0.1, 0, new THREE.MeshPhongMaterial(), 0, 3));
-    this.objs.push(new Toras(32, 10, 0.3, 0.1, 0, new THREE.MeshPhongMaterial(), 1, 4));
-    this.objs.push(new Toras(32, 16, 0.3, 0.1, 3, new THREE.MeshNormalMaterial(), 0, 2));
+    this.objs.push(new Toras(32, 3, 0.25, 0.1, 0, new THREE.MeshNormalMaterial()));
+    this.objs.push(new Toras(32, 4, 0.25, 0.1, 1, new THREE.MeshNormalMaterial()));
+    this.objs.push(new Toras(32, 10, 0.25, 0.1, 0, new THREE.MeshPhongMaterial(), 0, 3));
+    this.objs.push(new Toras(32, 10, 0.25, 0.1, 0, new THREE.MeshPhongMaterial(), 1, 4));
+    this.objs.push(new Toras(32, 16, 0.25, 0.1, 3, new THREE.MeshNormalMaterial(), 0, 2));
+    this.objs.push(new Toras(32, 16, 0.25, 0.1, 3, new THREE.MeshNormalMaterial({wireframe: true}), 0, 5));
     this.objs.forEach((o, i) => {
       const r = i / this.objs.length * Math.PI * 2;
-      o.position.x = Math.cos(r) * 0.8;
-      o.position.y = Math.sin(r) * 0.8;
+      o.position.x = Math.cos(r) * 0.7;
+      o.position.y = Math.sin(r) * 0.7;
       this.scene.add(o);
     });
     const light = new THREE.DirectionalLight(0xffffff, 1);

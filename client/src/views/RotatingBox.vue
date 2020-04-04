@@ -4,10 +4,17 @@
   </div>
 </template>
 <style lang="scss" scoped>
+@import "../scss/utils.scss";
   .parent {
     width: 100%;
-    height: 900px;
+    height: 500px;
     margin-bottom: 10px;
+    @include pc {
+      height: 800px;
+    };
+    @include sp {
+      height: 400px;
+    };
   }
 </style>
 <script lang="ts">
