@@ -42,7 +42,7 @@ export default class ThreeRotatingBox extends ThreeForVue {
     this.camera.position.x = Math.cos(this.time * 0.001) * d;
     this.camera.position.y = Math.cos(this.time * 0.001) * 0.4;
     this.camera.lookAt(0, 0, 0);
-    this.renderer?.setPixelRatio(window.devicePixelRatio || 1);
+    this.renderer?.setPixelRatio(window.devicePixelRatio > 2 ? 2 : window.devicePixelRatio);
   }
   public resize(width: number, height: number) {
     this.camera.aspect = width / height;
