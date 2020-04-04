@@ -6,12 +6,12 @@
 <style lang="scss" scoped>
   .parent {
     width: 100%;
-    height: 300px;
+    height: 900px;
     margin-bottom: 10px;
   }
 </style>
 <script lang="ts">
-import RotatingBox from '../three/rotatingBox';
+import RotatingBox from '../three/toras';
 import { Component, Vue, Ref } from 'vue-property-decorator';
 @Component
 export default class About extends Vue {
