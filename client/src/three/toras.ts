@@ -44,6 +44,7 @@ export default class Torases extends ThreeForVue {
   public resize(width: number, height: number) {
     this.camera.aspect = width / height;
     this.camera.updateProjectionMatrix();
+    this.renderer?.setPixelRatio(window.devicePixelRatio || 1);
   }
 }
 class Toras extends THREE.Object3D {
