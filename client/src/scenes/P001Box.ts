@@ -8,6 +8,9 @@ export class P001Box extends Scene {
   public get description() {
     return "three.jsを始めた！😖";
   }
+  public get params() {
+    return null;
+  }
   constructor() {
     super();
     this.camera = new THREE.PerspectiveCamera(

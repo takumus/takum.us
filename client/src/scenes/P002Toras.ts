@@ -7,6 +7,9 @@ export class P002Toras extends Scene {
   public get description() {
     return "メッシュを作ってみた。三角形を描くのが大変だった。<br>メビウスの輪もついでに作った。ねじった場合に連結するインデックスが変わるの面倒だった。";
   }
+  public get params() {
+    return null;
+  }
   constructor() {
     super();
     this.camera = new THREE.PerspectiveCamera(

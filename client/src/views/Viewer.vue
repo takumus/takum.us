@@ -3,7 +3,7 @@
     <div class="container">
       <div class="parent" ref="parent"></div>
     </div>
-    <div ref="params"></div>
+    <div ref="params" class="params"></div>
     <h4 v-html="description"></h4>
     <a :href="url"><img src="../assets/github.png"></a>
   </div>
@@ -38,12 +38,15 @@ img {
   }
   margin: 10px;
 }
+.params {
+  text-align: left;
+}
 </style>
 <script lang="ts">
 import * as scenes from "../scenes/";
 import Scene from '../scenes/scene';
 import { Component, Vue, Ref, Prop, Watch } from "vue-property-decorator";
-import {Params, ParamsData, NumberType} from '../params';
+import { ParamsGUI } from '../params';
 @Component
 export default class Viewer extends Vue {
   // refs
@@ -52,30 +55,12 @@ export default class Viewer extends Vue {
   // datas
   scene!: Scene | null;
   canvas!: HTMLCanvasElement | null;
+  paramsGUI!: ParamsGUI | null;
   description = "☺";
   url = "";
   mounted() {
     this.createScene();
     window.addEventListener("resize", this.resize);
-    const obj: ParamsData = {
-      "param1": {
-        value: 0,
-        min: 0,
-        max: 1,
-        numberType: NumberType.FLOAT
-      },
-      "param2": {
-        value: 0,
-        min: 0,
-        max: 10,
-        numberType: NumberType.INT
-      }
-    }
-    const p = new Params(obj);
-    p.on((params) => {
-      console.log(params);
-    })
-    this.params.appendChild(p.element);
   }
   destroyed() {
     this.destroyScene();
@@ -94,6 +79,10 @@ export default class Viewer extends Vue {
       this.canvas.remove();
       this.canvas = null;
     }
+    if (this.paramsGUI) {
+      this.paramsGUI.destroy();
+      this.paramsGUI = null;
+    }
   }
   createScene() {
     const sceneName = this.$route.params.id.toString();
@@ -104,6 +93,13 @@ export default class Viewer extends Vue {
     this.parent.appendChild(this.canvas);
     this.scene = new SceneClass();
     this.scene.mount(this.canvas);
+    if (this.scene.paramDatas) {
+      this.paramsGUI = new ParamsGUI(this.scene.paramDatas);
+      // this.paramsGUI.on((params) => {
+      //   console.log(params);
+      // });
+      this.params.appendChild(this.paramsGUI.element);
+    }
     this.description = this.scene.description;
     this.url = `https://github.com/takumus/takum.us/blob/master/client/src/scenes/${sceneName}.ts`;
     this.resize();
