@@ -1,24 +1,38 @@
 <template>
   <div>
+    <div class="container">
+      <div class="parent" ref="parent"></div>
+    </div>
     <h3>{{description}}</h3>
-    <div class="parent" ref="parent"></div>
+    <a :href="url"><img src="../assets/github.png"></a>
   </div>
 </template>
 <style lang="scss" scoped>
 @import "../scss/utils.scss";
+.container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
 .parent {
   width: 100%;
-  height: 500px;
   margin-bottom: 10px;
   @include pc {
-    height: 800px;
+    height: 500px;
+    max-width: 800px;
   }
   @include sp {
-    height: 400px;
+    height: 300px;
   }
 }
 h3 {
   margin: 10px;
+}
+img {
+  width: 128px;
+  @include sp {
+    width: 64px;
+  }
 }
 </style>
 <script lang="ts">
@@ -33,6 +47,7 @@ export default class Viewer extends Vue {
   scene!: Scene | null;
   canvas!: HTMLCanvasElement | null;
   description = "☺";
+  url = "";
   mounted() {
     this.createScene();
     window.addEventListener("resize", this.resize);
@@ -56,7 +71,8 @@ export default class Viewer extends Vue {
     }
   }
   createScene() {
-    const SceneClass = (scenes as  { [key: string]: { new(): Scene } })[this.$route.params.id.toString()];
+    const sceneName = this.$route.params.id.toString();
+    const SceneClass = (scenes as  { [key: string]: { new(): Scene } })[sceneName];
     if (!SceneClass) return;
     this.destroyScene();
     this.canvas = document.createElement("canvas");
@@ -64,6 +80,7 @@ export default class Viewer extends Vue {
     this.scene = new SceneClass();
     this.scene.mount(this.canvas);
     this.description = this.scene.description;
+    this.url = `https://github.com/takumus/takum.us/blob/master/client/src/scenes/${sceneName}.ts`;
     this.resize();
   }
   @Watch("$route")

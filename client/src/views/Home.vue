@@ -4,8 +4,16 @@
   </div>
 </template>
 <style lang="scss" scoped>
+@import "../scss/utils.scss";
 img {
-  width: 30%;
+  @include pc {
+    max-width: 256px;
+    min-width: 128px;
+    width: 30%;
+  }
+  @include sp {
+    width: 128px;
+  }
 }
 </style>
 <script lang="ts">

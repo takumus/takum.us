@@ -1,7 +1,9 @@
 <template>
   <div id="app">
+    <h1>takum.us</h1>
     <div id="nav">
-      <router-link to="/">home</router-link>
+      <a href="https://blog.takum.us">Blog</a>
+      <router-link to="/">Home</router-link>
       <router-link v-for="scene in scenes" :key="scene" :to="'/viewer/' + scene">{{scene}}</router-link>
     </div>
     <router-view/>
@@ -10,19 +12,23 @@
 
 <style lang="scss">
 @import "./scss/utils.scss";
+body {
+  margin: 0px;
+}
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  margin: 0 10px;
   @include pc {
   };
   @include sp {
   };
 }
 #nav {
-  padding: 10px;
+  padding-bottom: 20px;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -30,8 +36,7 @@
 #nav a {
   font-weight: bold;
   color: #2c3e50;
-  margin: 0px 2px;
-  display: block;
+  margin: 0px 4px;
 }
 #nav a.router-link-exact-active {
   color: #42b983;
