@@ -2,8 +2,8 @@
   <div>
     <div class="container">
       <div class="parent" ref="parent"></div>
+      <div ref="params" class="params"></div>
     </div>
-    <div ref="params" class="params"></div>
     <h4 v-html="description"></h4>
     <a :href="url"><img src="../assets/github.png"></a>
   </div>
@@ -14,6 +14,8 @@
   width: 100%;
   display: flex;
   justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 .parent {
   width: 100%;
@@ -39,9 +41,10 @@ img {
   margin: 10px;
 }
 .params {
+  width: 100%;
   max-width: 500px;
   margin: auto;
-  padding: 0px 16px;
+  margin: 0px 16px;
 }
 </style>
 <script lang="ts">
@@ -95,7 +98,7 @@ export default class Viewer extends Vue {
     this.parent.appendChild(this.canvas);
     this.scene = new SceneClass();
     this.scene.mount(this.canvas);
-    if (this.scene.paramDatas) {
+    if (this.scene.paramDatas && this.scene.paramDatas.length > 0) {
       this.paramsGUI = new ParamsGUI(this.scene.paramDatas);
       this.params.appendChild(this.paramsGUI.element);
     }

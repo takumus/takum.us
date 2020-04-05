@@ -5,31 +5,28 @@ export class P003Params extends Scene {
   private box: THREE.Mesh;
   private scene: THREE.Scene;
   private camera: THREE.PerspectiveCamera;
-  private time: number;
-  private rotateSpeedX: ParamData;
-  private rotateSpeedY: ParamData;
+  // params
+  private rotateSpeedX: ParamData = {
+    name: "speed x",
+    value: 0.2,
+    min: -1,
+    max: 1,
+    numberType: NumberType.FLOAT
+  }
+  private rotateSpeedY: ParamData = {
+    name: "speed y",
+    value: -0.1,
+    min: -1,
+    max: 1,
+    numberType: NumberType.FLOAT
+  }
   public get description() {
     return "dat.guiみたいな奴を作ってみた。👆";
   }
   constructor() {
     super();
-    this.rotateSpeedX = {
-      name: "speed x",
-      value: 0.2,
-      min: -1,
-      max: 1,
-      numberType: NumberType.FLOAT
-    }
-    this.rotateSpeedY = {
-      name: "speed y",
-      value: -0.1,
-      min: -1,
-      max: 1,
-      numberType: NumberType.FLOAT
-    }
-    this.paramDatas = [
-      this.rotateSpeedX, this.rotateSpeedY
-    ];
+    this.paramDatas.push(this.rotateSpeedX);
+    this.paramDatas.push(this.rotateSpeedY);
     this.camera = new THREE.PerspectiveCamera(
       70,   // fov
       1,    // aspect
@@ -44,7 +41,6 @@ export class P003Params extends Scene {
     this.camera.position.y = 0.4;
     this.camera.lookAt(this.box.position);
     this.scene.add(this.box);
-    this.time = 0;
     // attach
     this.currentScene = this.scene;
     this.currentCamera = this.camera;
