@@ -1,6 +1,6 @@
 import Scene from './scene';
 import * as THREE from "three";
-export class P002Toras extends Scene {
+export class P002Torus extends Scene {
   private scene: THREE.Scene;
   private camera: THREE.PerspectiveCamera;
   private objs: Toras[];
