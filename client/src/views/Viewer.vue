@@ -16,7 +16,8 @@
 }
 </style>
 <script lang="ts">
-import { scenes } from "../scenes/@scenes";
+import * as scenes from "../scenes/@scenes";
+console.log(scenes);
 import ThreeForVue from "@takumus/three-for-vue";
 import { Component, Vue, Ref, Prop, Watch } from "vue-property-decorator";
 @Component
@@ -49,7 +50,7 @@ export default class Viewer extends Vue {
     }
   }
   createScene() {
-    const SceneClass = scenes[this.$route.params.id.toString()];
+    const SceneClass = (scenes as  { [key: string]: { new(): ThreeForVue } })[this.$route.params.id.toString()];
     if (!SceneClass) return;
     this.destroyScene();
     this.canvas = document.createElement("canvas");

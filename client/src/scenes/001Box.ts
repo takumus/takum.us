@@ -1,6 +1,6 @@
 import ThreeForVue from '@takumus/three-for-vue';
 import * as THREE from "three";
-export default class Scene001Box extends ThreeForVue {
+export class P001Box extends ThreeForVue {
   private boxes: Box[];
   private scene: THREE.Scene;
   private camera: THREE.PerspectiveCamera;

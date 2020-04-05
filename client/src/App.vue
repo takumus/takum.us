@@ -23,18 +23,22 @@
 }
 #nav {
   padding: 30px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 #nav a {
   font-weight: bold;
   color: #2c3e50;
   margin: 0px 2px;
+  display: block;
 }
 #nav a.router-link-exact-active {
   color: #42b983;
 }
 </style>
 <script lang="ts">
-import { scenes } from "./scenes/@scenes";
+import * as scenes from "./scenes/@scenes";
 import { Component, Vue } from "vue-property-decorator";
 @Component
 export default class App extends Vue {
