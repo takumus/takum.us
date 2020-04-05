@@ -22,7 +22,7 @@
   };
 }
 #nav {
-  padding: 30px;
+  padding: 10px;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -38,7 +38,7 @@
 }
 </style>
 <script lang="ts">
-import * as scenes from "./scenes/@scenes";
+import * as scenes from "./scenes/";
 import { Component, Vue } from "vue-property-decorator";
 @Component
 export default class App extends Vue {

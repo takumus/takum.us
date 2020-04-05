@@ -1,10 +1,13 @@
-import ThreeForVue from '@takumus/three-for-vue';
+import Scene from './@base';
 import * as THREE from "three";
-export class P003Tube extends ThreeForVue {
+export class P003Tube extends Scene {
   private box: THREE.Mesh;
   private scene: THREE.Scene;
   private camera: THREE.PerspectiveCamera;
   private time: number;
+  public get description() {
+    return "";
+  }
   constructor() {
     super();
     this.camera = new THREE.PerspectiveCamera(

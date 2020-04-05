@@ -1,5 +1,8 @@
 <template>
-  <div class="parent" ref="parent"></div>
+  <div>
+    <h3>{{description}}</h3>
+    <div class="parent" ref="parent"></div>
+  </div>
 </template>
 <style lang="scss" scoped>
 @import "../scss/utils.scss";
@@ -14,19 +17,22 @@
     height: 400px;
   }
 }
+h3 {
+  margin: 10px;
+}
 </style>
 <script lang="ts">
-import * as scenes from "../scenes/@scenes";
-console.log(scenes);
-import ThreeForVue from "@takumus/three-for-vue";
+import * as scenes from "../scenes/";
+import Scene from '../scenes/@base';
 import { Component, Vue, Ref, Prop, Watch } from "vue-property-decorator";
 @Component
 export default class Viewer extends Vue {
   // refs
   @Ref() parent!: HTMLElement;
   // datas
-  scene!: ThreeForVue | null;
+  scene!: Scene | null;
   canvas!: HTMLCanvasElement | null;
+  description = "☺";
   mounted() {
     this.createScene();
     window.addEventListener("resize", this.resize);
@@ -50,13 +56,14 @@ export default class Viewer extends Vue {
     }
   }
   createScene() {
-    const SceneClass = (scenes as  { [key: string]: { new(): ThreeForVue } })[this.$route.params.id.toString()];
+    const SceneClass = (scenes as  { [key: string]: { new(): Scene } })[this.$route.params.id.toString()];
     if (!SceneClass) return;
     this.destroyScene();
     this.canvas = document.createElement("canvas");
     this.parent.appendChild(this.canvas);
     this.scene = new SceneClass();
     this.scene.mount(this.canvas);
+    this.description = this.scene.description;
     this.resize();
   }
   @Watch("$route")
