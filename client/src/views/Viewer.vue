@@ -37,7 +37,7 @@ img {
 </style>
 <script lang="ts">
 import * as scenes from "../scenes/";
-import Scene from '../scenes/@base';
+import Scene from '../scenes/scene';
 import { Component, Vue, Ref, Prop, Watch } from "vue-property-decorator";
 @Component
 export default class Viewer extends Vue {

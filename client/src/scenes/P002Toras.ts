@@ -1,4 +1,4 @@
-import Scene from './@base';
+import Scene from './scene';
 import * as THREE from "three";
 export class P002Toras extends Scene {
   private scene: THREE.Scene;
