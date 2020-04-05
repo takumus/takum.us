@@ -2,7 +2,7 @@
   <div>
     <div class="container">
       <div class="parent" ref="parent"></div>
-      <div ref="params" class="params"></div>
+      <div ref="params" v-show="paramsGUI!=null" class="params"></div>
     </div>
     <h4 v-html="description"></h4>
     <a :href="url"><img src="../assets/github.png"></a>
@@ -19,7 +19,6 @@
 }
 .parent {
   width: 100%;
-  margin-bottom: 10px;
   @include pc {
     height: 500px;
     max-width: 800px;
@@ -31,7 +30,7 @@
   border-radius: 16px;
 }
 h4 {
-  margin: 10px;
+  margin: 16px;
 }
 img {
   width: 128px;
@@ -44,7 +43,7 @@ img {
   width: 100%;
   max-width: 500px;
   margin: auto;
-  margin: 0px 16px;
+  margin-top: 18px;
 }
 </style>
 <script lang="ts">
@@ -58,9 +57,9 @@ export default class Viewer extends Vue {
   @Ref() parent!: HTMLElement;
   @Ref() params!: HTMLElement;
   // datas
-  scene!: Scene | null;
-  canvas!: HTMLCanvasElement | null;
-  paramsGUI!: ParamsGUI | null;
+  scene: Scene | null = null;
+  canvas: HTMLCanvasElement | null = null;
+  paramsGUI: ParamsGUI | null = null;
   description = "☺";
   url = "";
   mounted() {
