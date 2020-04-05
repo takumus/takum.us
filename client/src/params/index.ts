@@ -35,7 +35,7 @@ export class ParamsGUI {
     elements.slider.addEventListener("input", () => {
       const value = this.calculateValueFromInput(param, Number(elements.slider.value));
       this.update(param, value);
-      elements.value.innerHTML = value.toString();
+      elements.value.innerHTML = this.valueToString(value);
     });
     if (param.numberType == NumberType.FLOAT) {
       elements.slider.min = "0";
@@ -46,19 +46,26 @@ export class ParamsGUI {
       elements.slider.max = param.max.toString();
       elements.slider.value = param.value.toString();
     }
-    elements.label.innerHTML = `${param.name} : `;
-    elements.value.innerHTML = param.value.toString();
+    elements.label.innerHTML = `${param.name}`;
+    elements.value.innerHTML = this.valueToString(param.value);
     elements.param.appendChild(elements.label);
-    elements.param.appendChild(elements.value);
     elements.param.appendChild(elements.slider);
+    elements.param.appendChild(elements.value);
     this.elements.push(elements.param);
     this._element.appendChild(elements.param);
   }
+  private valueToString(value: number) {
+    return value.toFixed(3);
+  }
   private createElements() {
     const param = document.createElement("div");
-    const label = document.createElement("span");
-    const value = document.createElement("span");
+    const label = document.createElement("p");
+    const value = document.createElement("p");
     const slider = document.createElement("input");
+    label.className = "params-gui-label";
+    param.className = "params-gui-parent";
+    slider.className = "params-gui-slider";
+    value.className = "params-gui-value";
     return {
       param,
       label,
@@ -101,3 +108,60 @@ export class ParamsGUI {
     }
   }
 }
+
+function createStyles() {
+  const id = "params-gui-styles";
+  const thickness = 20;
+  const style = `
+  .params-gui-slider {
+    flex: 3;
+    -webkit-appearance: none;
+    width: 100%;
+    height: ${thickness}px;
+    border-radius: ${thickness/2}px;
+    background: #e5e5e5;
+    outline: none;
+    opacity: 0.7;
+  }
+  .params-gui-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: ${thickness}px;
+    height: ${thickness}px;
+    border-radius: 50%;
+    background: #ff9d41;
+    cursor: pointer;
+  }
+  .params-gui-slider::-moz-range-thumb {
+    width: ${thickness}px;
+    height: ${thickness}px;
+    border-radius: 50%;
+    background: #ff9d41;
+    cursor: pointer;
+  }
+  .params-gui-parent {
+    display: flex;
+    align-items: center;
+  }
+  .params-gui-label {
+    flex: 1;
+    text-align: left;
+    overflow: hidden;
+    font-weight: 600;
+    margin: 8px 0px;
+  }
+  .params-gui-value {
+    flex: 1;
+    text-align: right;
+    overflow: hidden;
+    font-weight: 600;
+    margin: 8px 0px;
+  }`;
+  const oldStyleElement = document.head.querySelector(`#${id}`);
+  if (oldStyleElement) oldStyleElement.remove();
+  const styleElement = document.createElement("style");
+  styleElement.id = id;
+  document.head.appendChild(styleElement);
+  styleElement.innerHTML = style;
+}
+createStyles();

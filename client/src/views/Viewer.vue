@@ -39,7 +39,9 @@ img {
   margin: 10px;
 }
 .params {
-  text-align: left;
+  max-width: 500px;
+  margin: auto;
+  padding: 0px 16px;
 }
 </style>
 <script lang="ts">
