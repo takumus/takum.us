@@ -39,7 +39,7 @@ body {
   margin: 0px 4px;
 }
 #nav a.router-link-exact-active {
-  color: #42b983;
+  color: #ff9d41;
 }
 </style>
 <script lang="ts">

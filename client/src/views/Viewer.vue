@@ -24,6 +24,8 @@
   @include sp {
     height: 300px;
   }
+  overflow: hidden;
+  border-radius: 16px;
 }
 h3 {
   margin: 10px;
