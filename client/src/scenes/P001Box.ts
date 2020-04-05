@@ -6,7 +6,7 @@ export class P001Box extends Scene {
   private camera: THREE.PerspectiveCamera;
   private time: number;
   public get description() {
-    return "Three.jsを始めた";
+    return "three.jsを始めた！😖";
   }
   constructor() {
     super();

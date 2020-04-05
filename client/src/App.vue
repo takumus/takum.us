@@ -2,8 +2,8 @@
   <div id="app">
     <h1>takum.us</h1>
     <div id="nav">
-      <a href="https://blog.takum.us">Blog</a>
-      <router-link to="/">Home</router-link>
+      <a href="https://blog.takum.us">blog</a>
+      <router-link to="/">home</router-link>
       <router-link v-for="scene in scenes" :key="scene" :to="'/viewer/' + scene">{{scene}}</router-link>
     </div>
     <router-view/>
