@@ -3,6 +3,7 @@
     <div class="container">
       <div class="parent" ref="parent"></div>
     </div>
+    <div ref="params"></div>
     <h4 v-html="description"></h4>
     <a :href="url"><img src="../assets/github.png"></a>
   </div>
@@ -42,10 +43,12 @@ img {
 import * as scenes from "../scenes/";
 import Scene from '../scenes/scene';
 import { Component, Vue, Ref, Prop, Watch } from "vue-property-decorator";
+import {Params, ParamsData, NumberType} from '../params';
 @Component
 export default class Viewer extends Vue {
   // refs
   @Ref() parent!: HTMLElement;
+  @Ref() params!: HTMLElement;
   // datas
   scene!: Scene | null;
   canvas!: HTMLCanvasElement | null;
@@ -54,6 +57,25 @@ export default class Viewer extends Vue {
   mounted() {
     this.createScene();
     window.addEventListener("resize", this.resize);
+    const obj: ParamsData = {
+      "param1": {
+        value: 0,
+        min: 0,
+        max: 1,
+        numberType: NumberType.FLOAT
+      },
+      "param2": {
+        value: 0,
+        min: 0,
+        max: 10,
+        numberType: NumberType.INT
+      }
+    }
+    const p = new Params(obj);
+    p.on((params) => {
+      console.log(params);
+    })
+    this.params.appendChild(p.element);
   }
   destroyed() {
     this.destroyScene();
