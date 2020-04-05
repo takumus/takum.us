@@ -1,9 +1,8 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/viewer/box">RotatingBox</router-link> |
-      <router-link to="/viewer/toras">Toras</router-link>
+      <router-link to="/">home</router-link>
+      <router-link v-for="scene in scenes" :key="scene" :to="'/viewer/' + scene">{{scene}}</router-link>
     </div>
     <router-view/>
   </div>
@@ -28,28 +27,17 @@
 #nav a {
   font-weight: bold;
   color: #2c3e50;
+  margin: 0px 2px;
 }
 #nav a.router-link-exact-active {
   color: #42b983;
 }
 </style>
-<script>
-import * as io from 'socket.io-client';
-import Config from '../../@config';
-export default {
-  name: "app",
-  created() {
-    // const serverURL = `${Config.wsURL}:${Config.wsPort}`;
-    // const socket = io(serverURL);
-    // socket.on('connect', () => {
-    //   console.log(`connected to server: '${serverURL}'`);
-    //   socket.emit('data', {
-    //     message: 'hello from client'
-    //   })
-    // });
-    // socket.on('data', (data) => {
-    //   console.log(data);
-    // });
-  }
+<script lang="ts">
+import { scenes } from "./scenes/@scenes";
+import { Component, Vue } from "vue-property-decorator";
+@Component
+export default class App extends Vue {
+  scenes = Object.keys(scenes);
 }
 </script>

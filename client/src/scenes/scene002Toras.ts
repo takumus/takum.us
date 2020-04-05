@@ -1,6 +1,6 @@
 import ThreeForVue from '@takumus/three-for-vue';
 import * as THREE from "three";
-export default class Torases extends ThreeForVue {
+export default class Scene002Toras extends ThreeForVue {
   private scene: THREE.Scene;
   private camera: THREE.PerspectiveCamera;
   private objs: Toras[];
@@ -21,7 +21,7 @@ export default class Torases extends ThreeForVue {
     this.objs.push(new Toras(16, 10, 0.25, 0.1, 0, new THREE.MeshPhongMaterial(), 0, 3));
     this.objs.push(new Toras(16, 10, 0.25, 0.1, 0, new THREE.MeshPhongMaterial(), 1, 3));
     this.objs.push(new Toras(16, 16, 0.25, 0.1, 3, new THREE.MeshNormalMaterial(), 0, 2));
-    this.objs.push(new Toras(16, 16, 0.25, 0.1, 3, new THREE.MeshNormalMaterial({wireframe: true}), 0, 2));
+    this.objs.push(new Toras(16, 16, 0.25, 0.1, 3, new THREE.MeshNormalMaterial({ wireframe: true }), 0, 2));
     this.objs.forEach((o, i) => {
       const r = i / this.objs.length * Math.PI * 2;
       o.position.x = Math.cos(r) * 0.7;
@@ -81,15 +81,15 @@ class Toras extends THREE.Object3D {
             new THREE.Face3(
               ccni,
               cci,
-              (ii + res2 / 2)%res2
+              (ii + res2 / 2) % res2
             ),
             new THREE.Face3(
-              (ii + res2 / 2)%res2,
-              (ii + res2 / 2 + 1)%res2,
+              (ii + res2 / 2) % res2,
+              (ii + res2 / 2 + 1) % res2,
               ccni
             )
           );
-        }else {
+        } else {
           let a = i * this.res2;
           const cci = ii + a;
           const ccni = (cci + 1) % this.res2 + a;
@@ -113,7 +113,7 @@ class Toras extends THREE.Object3D {
     for (let i = 0; i < this.res1; i++) {
       for (let ii = 0; ii < this.res2; ii++) {
         const radian = ii / this.res2 * Math.PI * 2 - rr + (i / (this.res1)) * Math.PI * this.nejire;
-        const tr = Math.sin(i / this.res1 * Math.PI * 2 * this.kobu + rr*5);
+        const tr = Math.sin(i / this.res1 * Math.PI * 2 * this.kobu + rr * 5);
         const r2 = this.radius2 + (this.kobu != 0 ? tr * 0.03 : 0);
         const r = this.radius1 + Math.cos(radian) * r2;
         const cpx = Math.cos(i / this.res1 * Math.PI * 2) * r;
@@ -130,7 +130,7 @@ class Toras extends THREE.Object3D {
     }
     if (this.normalMode == 0) {
       this.g.computeFaceNormals();
-    }else {
+    } else {
       this.g.computeVertexNormals();
     }
     this.g.verticesNeedUpdate = true;

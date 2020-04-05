@@ -31,7 +31,7 @@ export default class Viewer extends Vue {
     window.addEventListener("resize", this.resize);
   }
   destroyed() {
-    this.destroyScene()
+    this.destroyScene();
     window.removeEventListener("resize", this.resize);
   }
   resize() {

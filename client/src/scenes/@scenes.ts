@@ -1,7 +1,7 @@
 import ThreeForVue from '@takumus/three-for-vue';
-import RotatingBox from './rotatingBox';
-import Toras from './toras';
-export const scenes: {[key:string]: { new(): ThreeForVue }} = {
-    "toras": Toras,
-    "box": RotatingBox
+import Scene001Box from './scene001Box';
+import Scene002Toras from './scene002Toras';
+export const scenes: { [key: string]: { new(): ThreeForVue } } = {
+    "001-box": Scene001Box,
+    "002-toras": Scene002Toras,
 }

@@ -1,6 +1,6 @@
 import ThreeForVue from '@takumus/three-for-vue';
 import * as THREE from "three";
-export default class ThreeRotatingBox extends ThreeForVue {
+export default class Scene001Box extends ThreeForVue {
   private boxes: Box[];
   private scene: THREE.Scene;
   private camera: THREE.PerspectiveCamera;
@@ -23,9 +23,9 @@ export default class ThreeRotatingBox extends ThreeForVue {
       box.position.x = Math.cos(i / l * Math.PI * 2) * 0.8;
       box.position.z = Math.sin(i / l * Math.PI * 2) * 0.8;
     }
-    this.time = Math.random()*10000;
+    this.time = Math.random() * 10000;
     this.camera.position.y = 0.6;
-    
+
     // attach
     this.currentScene = this.scene;
     this.currentCamera = this.camera;
@@ -33,7 +33,7 @@ export default class ThreeRotatingBox extends ThreeForVue {
   public animate(deltaTime: number) {
     this.boxes.forEach((box, i) => {
       box.update(deltaTime);
-      box.scale.x = box.scale.y = box.scale.z = 
+      box.scale.x = box.scale.y = box.scale.z =
         (Math.sin(-this.time * 0.01 + (i / (this.boxes.length - 1) * Math.PI * 2 * 3)) + 1) / 2 * 0.5 + 0.5;
     });
     this.time += deltaTime;
@@ -62,7 +62,7 @@ class Box extends THREE.Object3D {
       this.geom,
       new THREE.MeshNormalMaterial()
     );
-    this.time = Math.random()*10000;
+    this.time = Math.random() * 10000;
     this.add(this.mesh);
   }
   public update(deltaTime: number) {
