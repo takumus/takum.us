@@ -9,7 +9,7 @@ export class P003Params extends Scene {
   private param1: ParamData;
   private param2: ParamData;
   public get description() {
-    return "";
+    return "dat.guiみたいな奴を作ってみた。👆";
   }
   constructor() {
     super();

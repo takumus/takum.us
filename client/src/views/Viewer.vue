@@ -95,9 +95,6 @@ export default class Viewer extends Vue {
     this.scene.mount(this.canvas);
     if (this.scene.paramDatas) {
       this.paramsGUI = new ParamsGUI(this.scene.paramDatas);
-      // this.paramsGUI.on((params) => {
-      //   console.log(params);
-      // });
       this.params.appendChild(this.paramsGUI.element);
     }
     this.description = this.scene.description;
