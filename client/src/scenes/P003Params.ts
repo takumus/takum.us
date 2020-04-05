@@ -6,29 +6,29 @@ export class P003Params extends Scene {
   private scene: THREE.Scene;
   private camera: THREE.PerspectiveCamera;
   private time: number;
-  private param1: ParamData;
-  private param2: ParamData;
+  private rotateSpeedX: ParamData;
+  private rotateSpeedY: ParamData;
   public get description() {
     return "dat.guiみたいな奴を作ってみた。👆";
   }
   constructor() {
     super();
-    this.param1 = {
-      name: "param1",
-      value: 0,
+    this.rotateSpeedX = {
+      name: "speed x",
+      value: 0.2,
       min: -1,
       max: 1,
       numberType: NumberType.FLOAT
     }
-    this.param2 = {
-      name: "param2",
-      value: 0,
+    this.rotateSpeedY = {
+      name: "speed y",
+      value: -0.1,
       min: -1,
       max: 1,
       numberType: NumberType.FLOAT
     }
     this.paramDatas = [
-      this.param1, this.param2
+      this.rotateSpeedX, this.rotateSpeedY
     ];
     this.camera = new THREE.PerspectiveCamera(
       70,   // fov
@@ -50,8 +50,8 @@ export class P003Params extends Scene {
     this.currentCamera = this.camera;
   }
   public animate(deltaTime: number) {
-    this.box.rotation.x += deltaTime * this.param1.value * 0.01;
-    this.box.rotation.y += deltaTime * this.param2.value * 0.01;
+    this.box.rotation.x += deltaTime * this.rotateSpeedX.value * 0.01;
+    this.box.rotation.y += deltaTime * this.rotateSpeedY.value * 0.01;
   }
   public resize(width: number, height: number) {
     this.camera.aspect = width / height;
