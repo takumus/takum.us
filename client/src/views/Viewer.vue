@@ -3,7 +3,7 @@
     <div class="container">
       <div class="parent" ref="parent"></div>
     </div>
-    <h3>{{description}}</h3>
+    <h4 v-html="description"></h4>
     <a :href="url"><img src="../assets/github.png"></a>
   </div>
 </template>
@@ -27,7 +27,7 @@
   overflow: hidden;
   border-radius: 16px;
 }
-h3 {
+h4 {
   margin: 10px;
 }
 img {
@@ -35,6 +35,7 @@ img {
   @include sp {
     width: 64px;
   }
+  margin: 10px;
 }
 </style>
 <script lang="ts">

@@ -45,11 +45,11 @@ export class P001Box extends Scene {
     this.camera.position.x = Math.cos(this.time * 0.001) * d;
     this.camera.position.y = Math.cos(this.time * 0.001) * 0.4;
     this.camera.lookAt(0, 0, 0);
-    this.renderer?.setPixelRatio(window.devicePixelRatio > 2 ? 2 : window.devicePixelRatio);
   }
   public resize(width: number, height: number) {
     this.camera.aspect = width / height;
     this.camera.updateProjectionMatrix();
+    this.renderer?.setPixelRatio(window.devicePixelRatio > 2 ? 2 : window.devicePixelRatio);
   }
 }
 class Box extends THREE.Object3D {
