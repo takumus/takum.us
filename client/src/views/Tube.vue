@@ -21,7 +21,7 @@
 import RotatingBox from '../three/toras';
 import { Component, Vue, Ref } from 'vue-property-decorator';
 @Component
-export default class About extends Vue {
+export default class Tube extends Vue {
   // refs
   @Ref() canvas!: HTMLCanvasElement;
   @Ref() parent!: HTMLElement;

@@ -2,7 +2,8 @@
   <div id="app">
     <div id="nav">
       <router-link to="/">Home</router-link> |
-      <router-link to="/toras">Toras</router-link>
+      <router-link to="/viewer/box">RotatingBox</router-link> |
+      <router-link to="/viewer/toras">Toras</router-link>
     </div>
     <router-view/>
   </div>
@@ -38,17 +39,17 @@ import Config from '../../@config';
 export default {
   name: "app",
   created() {
-    const serverURL = `${Config.wsURL}:${Config.wsPort}`;
-    const socket = io(serverURL);
-    socket.on('connect', () => {
-      console.log(`connected to server: '${serverURL}'`);
-      socket.emit('data', {
-        message: 'hello from client'
-      })
-    });
-    socket.on('data', (data) => {
-      console.log(data);
-    });
+    // const serverURL = `${Config.wsURL}:${Config.wsPort}`;
+    // const socket = io(serverURL);
+    // socket.on('connect', () => {
+    //   console.log(`connected to server: '${serverURL}'`);
+    //   socket.emit('data', {
+    //     message: 'hello from client'
+    //   })
+    // });
+    // socket.on('data', (data) => {
+    //   console.log(data);
+    // });
   }
 }
 </script>
