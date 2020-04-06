@@ -29,6 +29,7 @@ export class P004Mouse extends Scene {
     this.camera.lookAt(this.box.position);
     this.scene.add(this.box);
     this.scene.add(new THREE.AxesHelper(1));
+    this.preventMouseEvents = true;
     // attach
     this.currentScene = this.scene;
     this.currentCamera = this.camera;

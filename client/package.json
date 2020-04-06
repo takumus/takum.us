@@ -9,7 +9,7 @@
     "start": "npm run serve"
   },
   "dependencies": {
-    "@takumus/three-for-vue": "^1.0.9",
+    "@takumus/three-for-vue": "^1.0.10",
     "core-js": "^3.6.4",
     "node-sass": "^4.13.1",
     "sass-loader": "^8.0.2",
