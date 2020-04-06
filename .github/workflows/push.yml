@@ -1,4 +1,4 @@
-name: Node.js CI
+name: Deploy
 on: [push]
 jobs:
   build:
@@ -21,3 +21,4 @@ jobs:
         DEPLOY_SERVER_USERNAME: ${{ secrets.DEPLOY_SERVER_USERNAME }}
         DEPLOY_SERVER_PRIVATE_KEY: ${{ secrets.DEPLOY_SERVER_PRIVATE_KEY }}
         DEPLOY_SERVER_DIRECTORY: ${{ secrets.DEPLOY_SERVER_DIRECTORY }}
+        CI: true
