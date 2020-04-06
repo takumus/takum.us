@@ -8,5 +8,7 @@ module.exports = {
         options.configFile = path.resolve(__dirname, "tsconfig.json");
         return options;
       })
-  }
+    
+  },
+  transpileDependencies: ['three', 'three-for-vue']
 }

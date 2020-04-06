@@ -79,8 +79,8 @@ export default class Viewer extends Vue {
       this.scene.destroy();
       this.scene = null;
     }
-    if (this.canvas) {
-      this.canvas.remove();
+    if (this.canvas && this.canvas.parentElement) {
+      this.canvas.parentElement.removeChild(this.canvas);
       this.canvas = null;
     }
     if (this.paramsGUI) {

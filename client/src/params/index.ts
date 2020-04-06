@@ -89,7 +89,9 @@ export class ParamsGUI {
   }
   public destroy() {
     this.elements.forEach((e) => {
-      e.remove();
+      if (e.parentElement) {
+        e.parentElement.removeChild(e);
+      }
     });
   }
   public get element() {
