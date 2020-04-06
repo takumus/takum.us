@@ -24,10 +24,10 @@ ssh.connect({
 
   // exit with zero
   process.exit(0);
-});
+}).catch(killIfError);
 function killIfError(error) {
   if (error) {
-    console.log(error);
+    console.error(`${error}`);
     process.exit(1);
   }
 }
