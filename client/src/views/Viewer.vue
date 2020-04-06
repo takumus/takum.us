@@ -28,6 +28,7 @@
   }
   overflow: hidden;
   border-radius: 16px;
+  z-index: 0;
 }
 h4 {
   margin: 16px;
