@@ -15,7 +15,7 @@ ssh.connect({
   console.log('STDERR: ' + rmResult.stderr);
   // upload
   console.log("UPLOAD!!!");
-  const uploadResult = await ssh.putDirectory(path.resolve(__dirname, "../../../dist"), "./takum.us/dist");
+  const uploadResult = await ssh.putDirectory("./dist", "./takum.us/dist");
   console.log('STDOUT: ' + uploadResult.stdout);
   console.log('STDERR: ' + uploadResult.stderr);
 });
