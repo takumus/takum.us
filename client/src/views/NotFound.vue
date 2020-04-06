@@ -1,6 +1,7 @@
 <template>
   <div class="home">
     <img alt="logo" src="../assets/logo.png" />
+    <h1>Not Found</h1>
   </div>
 </template>
 <style lang="scss" scoped>
@@ -14,15 +15,12 @@ img {
   @include sp {
     width: 128px;
   }
-  -webkit-animation: rotating 5s linear infinite;
-  -moz-animation: rotating 5s linear infinite;
-  -ms-animation: rotating 5s linear infinite;
-  -o-animation: rotating 5s linear infinite;
-  animation: rotating 5s linear infinite;
-  animation-timing-function: cubic-bezier(0.68, -0.6, 0.32, 1.6);
-  -webkit-animation-timing-function: cubic-bezier(0.68, -0.6, 0.32, 1.6);
-  -moz-animation-timing-function: cubic-bezier(0.68, -0.6, 0.32, 1.6);
-  -o-animation-timing-function: cubic-bezier(0.68, -0.6, 0.32, 1.6);
+  filter: grayscale(100%);
+  -webkit-animation: rotating 1s linear infinite;
+  -moz-animation: rotating 1s linear infinite;
+  -ms-animation: rotating 1s linear infinite;
+  -o-animation: rotating 1s linear infinite;
+  animation: rotating 1s linear infinite;
 }
 @-webkit-keyframes rotating {
   from {
@@ -52,14 +50,16 @@ img {
     transform: rotate(360deg);
   }
 }
-
 </style>
 <script lang="ts">
-// @ is an alias to /src
-// import HelloWorld from '@/components/HelloWorld.vue'
-
-export default {
-  name: "Home",
-  components: {}
-};
+import { Component, Vue, Ref, Prop, Watch } from "vue-property-decorator";
+@Component
+export default class NotFound extends Vue {
+  mounted() {
+    document.body.style.backgroundColor = "#DDD";
+  }
+  destroyed() {
+    document.body.style.backgroundColor = "";
+  }
+}
 </script>

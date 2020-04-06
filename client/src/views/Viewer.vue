@@ -91,7 +91,9 @@ export default class Viewer extends Vue {
   createScene() {
     const sceneName = this.$route.params.id.toString();
     const SceneClass = (scenes as  { [key: string]: { new(): Scene } })[sceneName];
-    if (!SceneClass) return;
+    if (!SceneClass) {
+      this.$router.push("/NotFound");
+    }
     this.destroyScene();
     this.canvas = document.createElement("canvas");
     this.parent.appendChild(this.canvas);
