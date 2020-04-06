@@ -105,7 +105,7 @@ export default class Viewer extends Vue {
       this.params.appendChild(this.paramsGUI.element);
     }
     this.description = this.scene.description;
-    this.url = `https://github.com/takumus/takum.us/blob/master/client/src/scenes/${sceneName}.ts`;
+    this.url = `https://github.com/takumus/takum.us/blob/master/src/scenes/${sceneName}.ts`;
     this.resize();
   }
   @Watch("$route")
