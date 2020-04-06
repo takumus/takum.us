@@ -13,9 +13,14 @@ ssh.connect({
   const rmResult = await ssh.execCommand("rm -rf ./takum.us/dist");
   console.log('STDOUT: ' + rmResult.stdout);
   console.log('STDERR: ' + rmResult.stderr);
-  // upload
-  console.log("UPLOAD!!!");
+  // upload 1
+  console.log("UPLOAD1!!!");
   const uploadResult = await ssh.putDirectory("./dist", "./takum.us/dist");
   console.log('STDOUT: ' + uploadResult.stdout);
   console.log('STDERR: ' + uploadResult.stderr);
+  // upload 2
+  console.log("UPLOAD2!!!");
+  const uploadResult2 = await ssh.putDirectory(path.resolve(__dirname,  "../../../dist"), "./takum.us/dist");
+  console.log('STDOUT: ' + uploadResult2.stdout);
+  console.log('STDERR: ' + uploadResult2.stderr);
 });
