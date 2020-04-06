@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <img alt="logo" src="../assets/logo.png" />
-    <h1>Hello Internet Exploler</h1>
+    <h1>Why are you still using Internet Exploler?</h1>
   </div>
 </template>
 <style lang="scss" scoped>
