@@ -1,7 +1,7 @@
 import Scene from './scene';
 import * as THREE from "three";
 import { Vector3, Quaternion } from 'three';
-export class P004MouseAndQuat extends Scene {
+export class P004Mouse extends Scene {
   private box: THREE.Mesh;
   private scene: THREE.Scene;
   private camera: THREE.PerspectiveCamera;
