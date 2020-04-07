@@ -1,11 +1,14 @@
 <template>
   <div class="home">
-    <img alt="logo" src="../assets/logo.png" />
+    <img class="logo" alt="logo" src="../assets/logo.png" />
+    <div>
+      <a href="https://github.com/takumus/takum.us"><img class="github" src="../assets/github.png"></a>
+    </div>
   </div>
 </template>
 <style lang="scss" scoped>
 @import "../scss/utils.scss";
-img {
+.logo {
   @include pc {
     max-width: 256px;
     min-width: 128px;
@@ -23,6 +26,10 @@ img {
   -webkit-animation-timing-function: cubic-bezier(0.68, -0.6, 0.32, 1.6);
   -moz-animation-timing-function: cubic-bezier(0.68, -0.6, 0.32, 1.6);
   -o-animation-timing-function: cubic-bezier(0.68, -0.6, 0.32, 1.6);
+  margin: 32px;
+}
+.github {
+  width: 64px;
 }
 @-webkit-keyframes rotating {
   from {

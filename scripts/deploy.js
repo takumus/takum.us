@@ -20,7 +20,6 @@ ssh.connect(config).then(async () => {
   ).catch(killIfError);
   killIfError(remove.stderr);
   console.log('done!');
-
   // upload
   console.log('upload');
   await ssh.putDirectory(
@@ -28,7 +27,6 @@ ssh.connect(config).then(async () => {
     config.directory
   ).catch(killIfError);
   console.log('done!');
-
   // exit with zero
   process.exit(0);
 }).catch(killIfError);

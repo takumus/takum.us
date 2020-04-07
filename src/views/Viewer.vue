@@ -34,10 +34,7 @@ h4 {
   margin: 16px;
 }
 img {
-  width: 128px;
-  @include sp {
-    width: 64px;
-  }
+  width: 64px;
   margin: 10px;
 }
 .params {
