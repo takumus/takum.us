@@ -6,7 +6,7 @@ export class P007Bezier extends Scene {
   private scene: THREE.Scene;
   private camera: THREE.PerspectiveCamera;
   public get description() {
-    return "3D空間でもベジェの式が普通に使えることが分かった😀<br>一旦５本線を描いた。<br>次はこれを動かしたりするぞ。";
+    return "3D空間でもベジェの式が普通に使えることが分かった😀<br>ベジェな線を５本描いて連結した。<br>次はこれを動かしたりするぞ。";
   }
   constructor() {
     super();
@@ -19,10 +19,10 @@ export class P007Bezier extends Scene {
     this.scene = new THREE.Scene();
     const rand = (n = 2) => (Math.random() - 0.5) * n;
     const copy = (v: THREE.Vector3) => new THREE.Vector3(v.x, v.y, v.z);
-    for (let i = 0; i < 5; i++) {
+    let a = new THREE.Vector3(rand(1), rand(1), rand(1));
+    let b = new THREE.Vector3(rand(), rand(), rand());
+    for (let i = 0; i < 10; i++) {
       const points: THREE.Vector3[] = [];
-      const a = new THREE.Vector3(rand(1), rand(1), rand(1));
-      const b = new THREE.Vector3(rand(), rand(), rand());
       const c = new THREE.Vector3(rand(), rand(), rand());
       const d = new THREE.Vector3(rand(1), rand(1), rand(1));
       const getPos = (t: number) => {
@@ -34,7 +34,7 @@ export class P007Bezier extends Scene {
         const tp = copy(i).sub(h).multiplyScalar(t).add(h);
         return tp;
       }
-      for (let t = 0; t < 1; t += 0.001) {
+      for (let t = 0; t < 1; t += 0.01) {
         points.push(getPos(t));
       }
       const line = new THREE.Line(
@@ -42,7 +42,7 @@ export class P007Bezier extends Scene {
         new THREE.MeshBasicMaterial({color:0xffffff})
       );
       this.scene.add(line);
-      for (let t = 0; t < 1; t += 0.1) {
+      for (let t = 0; t <= 1; t += 0.2) {
         const box = new THREE.Mesh(
           new THREE.BoxGeometry(0.03, 0.03, 0.03),
           new MeshNormalMaterial()
@@ -53,6 +53,8 @@ export class P007Bezier extends Scene {
         box.lookAt(tp2);
         this.scene.add(box);
       }
+      a = d;
+      b = copy(c).sub(d).multiplyScalar(-1).add(d);
     }
     this.scene.add(new THREE.AxesHelper(10));
     this.camera.position.z = 1;
