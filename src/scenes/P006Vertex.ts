@@ -19,7 +19,7 @@ export class P006Vertex extends Scene {
   }
   private paramDepth: ParamData = {
     name: "depth",
-    value: 0.1,
+    value: 0.06,
     min: 0,
     max: 3,
     numberType: NumberType.FLOAT
@@ -51,8 +51,8 @@ export class P006Vertex extends Scene {
     );
     this.camera.position.z = 1;
     const light = new THREE.DirectionalLight(0xffffff, 1);
-    light.position.z = 1;
-    light.position.x = 1;
+    light.position.z = 20;
+    light.position.y = 20;
     this.scene.add(light);
     this.scene.add(this.paper);
     this.preventMouseEvents = true;
@@ -62,8 +62,8 @@ export class P006Vertex extends Scene {
   }
   public animate(deltaTime: number) {
     this.time += deltaTime * 0.0003;
-    this.paper.rotation.y = (this.mouseRatioX - 0.5);
-    this.paper.rotation.x = (this.mouseRatioY - 0.5);
+    this.paper.rotation.y += ((this.mouseRatioX - 0.5) - this.paper.rotation.y) * 0.1;
+    this.paper.rotation.x += ((this.mouseRatioY - 0.5) - this.paper.rotation.x) * 0.1;
     this.material.time = this.time;
     this.material.frequency = this.paramFrequency.value;
     this.material.depth = this.paramDepth.value;
@@ -80,7 +80,8 @@ class NamiMaterial extends THREE.MeshPhongMaterial {
   private shader?: THREE.Shader;
   constructor(texture: THREE.Texture) {
     super({
-      map: texture
+      map: texture,
+      shininess: 0
     });
   }
   onBeforeCompile(shader: THREE.Shader) {
