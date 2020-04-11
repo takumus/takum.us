@@ -20,11 +20,9 @@
 .parent {
   width: 100%;
   @include pc {
-    height: 500px;
     max-width: 800px;
   }
   @include sp {
-    height: 300px;
   }
   overflow: hidden;
   border-radius: 16px;
@@ -70,7 +68,11 @@ export default class Viewer extends Vue {
   }
   resize() {
     const rect = this.parent.getBoundingClientRect();
-    if (this.scene) this.scene.setSize(rect.width, rect.height);
+    if (this.scene) {
+      const height = rect.width / this.scene.screenRatio
+      this.parent.style.height = height + "px";
+      this.scene.setSize(rect.width, height);
+    }
   }
   destroyScene() {
     if (this.scene) {

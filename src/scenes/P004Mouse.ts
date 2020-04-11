@@ -5,8 +5,6 @@ export class P004Mouse extends Scene {
   private box: THREE.Mesh;
   private scene: THREE.Scene;
   private camera: THREE.PerspectiveCamera;
-  private zAngle: number = 0;
-  private xAngle: number = 0;
   private px: number = 0;
   private py: number = 0;
   public get description() {

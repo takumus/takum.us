@@ -3,4 +3,5 @@ import { ParamData } from '../params';
 export default abstract class Scene extends ThreeForVue {
     public abstract get description(): string;
     public paramDatas: ParamData[] = [];
+    public screenRatio = 1.4;
 }

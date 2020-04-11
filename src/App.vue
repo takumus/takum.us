@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <h1>takum.us</h1>
+    <h1>takum.us{{env}}</h1>
     <div id="nav">
       <a href="https://blog.takum.us">blog</a>
       <router-link to="/">home</router-link>
@@ -47,6 +47,7 @@ import * as scenes from "./scenes/";
 import { Component, Vue } from "vue-property-decorator";
 @Component
 export default class App extends Vue {
+  env = process.env.NODE_ENV == "development" ? "[DEV]" : "";
   scenes = Object.keys(scenes);
 }
 </script>
