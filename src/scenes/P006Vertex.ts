@@ -3,10 +3,12 @@ import * as THREE from "three";
 import image from "../assets/img001.png";
 import { NumberType, ParamData } from "../params";
 export class P006Vertex extends Scene {
-  private paper: THREE.Mesh;
+  private texturePaper: THREE.Mesh;
+  private normalPaper: THREE.Mesh;
   private scene: THREE.Scene;
   private camera: THREE.PerspectiveCamera;
-  private material: NamiMaterial;
+  private textureMaterial: NamiMaterial;
+  private normalMaterial: NamiNormalMaterial;
   private meshResolution = 64;
   private time = 0;
   // params
@@ -58,21 +60,29 @@ export class P006Vertex extends Scene {
       100    // far
     );
     this.scene = new THREE.Scene();
-    this.material = new NamiMaterial(new THREE.TextureLoader().load(image));
-    this.paper = new THREE.Mesh(
+    this.textureMaterial = new NamiMaterial(new THREE.TextureLoader().load(image));
+    this.normalMaterial = new NamiNormalMaterial();
+    this.texturePaper = new THREE.Mesh(
       new THREE.PlaneGeometry(1, 1, this.meshResolution, this.meshResolution),
-      this.material
+      this.textureMaterial
+    );
+    this.normalPaper = new THREE.Mesh(
+      new THREE.PlaneGeometry(1, 1, this.meshResolution, this.meshResolution),
+      this.normalMaterial
     );
     this.camera.position.z = 1;
-    const light2 = new THREE.PointLight(0xFC7CB5, 1);
-    light2.position.z = 20;
-    light2.position.y = -20;
-    this.scene.add(light2);
     const light = new THREE.PointLight(0x48FECB, 1);
     light.position.z = 20;
-    light.position.y = 20;
+    light.position.y = -20;
+    const light2 = new THREE.PointLight(0xFC7CB5, 1);
+    light2.position.z = 20;
+    light2.position.y = 20;
     this.scene.add(light);
-    this.scene.add(this.paper);
+    this.scene.add(light2);
+    this.scene.add(this.texturePaper);
+    this.scene.add(this.normalPaper);
+    this.texturePaper.position.x = 0.6;
+    this.normalPaper.position.x = -0.6;
     this.preventMouseEvents = true;
     // attach
     this.currentScene = this.scene;
@@ -80,20 +90,78 @@ export class P006Vertex extends Scene {
   }
   public animate(deltaTime: number) {
     this.time += deltaTime * 0.0003;
-    this.paper.rotation.y += ((this.mouseRatioX - 0.5) - this.paper.rotation.y) * 0.1;
-    this.paper.rotation.x += ((this.mouseRatioY - 0.5) - this.paper.rotation.x) * 0.1;
-    this.material.time = this.time;
-    this.material.frequency = this.paramFrequency.value;
-    this.material.depth = this.paramDepth.value;
-    this.material.resolution = this.meshResolution;
-    this.material.specular = new THREE.Color().setRGB(this.paramSpecular.value, this.paramSpecular.value, this.paramSpecular.value);
-    this.material.shininess = this.paramShiness.value;
-    this.camera.position.z = this.paramCameraDistance.value;
+    this.texturePaper.rotation.y += ((this.mouseRatioX - 0.5) * 2 - this.texturePaper.rotation.y) * 0.1;
+    this.texturePaper.rotation.x += ((this.mouseRatioY - 0.5) * 2 - this.texturePaper.rotation.x) * 0.1;
+    this.normalPaper.rotation.x = this.texturePaper.rotation.x;
+    this.normalPaper.rotation.y = this.texturePaper.rotation.y;
+    this.normalMaterial.time = this.textureMaterial.time = this.time;
+    this.normalMaterial.frequency = this.textureMaterial.frequency = this.paramFrequency.value;
+    this.normalMaterial.depth = this.textureMaterial.depth = this.paramDepth.value;
+    this.normalMaterial.resolution = this.textureMaterial.resolution = this.meshResolution;
+    this.textureMaterial.specular = new THREE.Color().setRGB(this.paramSpecular.value, this.paramSpecular.value, this.paramSpecular.value);
+    this.textureMaterial.shininess = this.paramShiness.value;
+    this.camera.position.z = this.camera.position.z = this.paramCameraDistance.value;
   }
   public resize(width: number, height: number) {
     this.camera.aspect = width / height;
     this.camera.updateProjectionMatrix();
     this.renderer?.setPixelRatio(window.devicePixelRatio > 2 ? 2 : window.devicePixelRatio);
+  }
+}
+function getShader(shader: THREE.Shader) {
+  // 追加分のユニフォーム達
+  const uniforms: {[key: string]: THREE.IUniform} = {
+    time: { value: 0 },
+    depth: { value: 0 },
+    frequency: { value: 0 },
+    resolution: { value: 0 }
+  }
+  // 挿入分のトランスフォームと法線計算処理。
+  const transform = `
+    vec3 transformed = position.xyz;
+    float t = 1.0 / resolution;
+    float x = position.x;
+    float y = position.y;
+    float mz = sin((pow2(x) + pow2(y) + time) * frequency);
+    float rz = sin((pow2(x + t) + pow2(y) + time) * frequency);
+    float lz = sin((pow2(x - t) + pow2(y) + time) * frequency);
+    float tz = sin((pow2(x) + pow2(y - t) + time) * frequency);
+    float bz = sin((pow2(x) + pow2(y + t) + time) * frequency);
+    objectNormal = normalize(vec3(0.0, 0.0, 0.0));
+    vNormal = normalMatrix * normalize(vec3((rz - lz) * depth, (tz - bz) * depth, depth+0.01));
+    transformed.z = mz * depth;
+  `;
+  // 元のユニフォーム群と合成
+  shader.uniforms = {
+    ...shader.uniforms,
+    ...uniforms
+  }
+  // 無理やり連結
+  shader.vertexShader = Object.keys(uniforms).map((n) => `uniform float ${n};\n`).join("") + shader.vertexShader;
+  // 無理やり挿入
+  shader.vertexShader = shader.vertexShader.replace("#include <begin_vertex>", transform);
+  // console.log(shader.vertexShader);
+  return shader;
+}
+class NamiNormalMaterial extends THREE.MeshNormalMaterial {
+  private shader?: THREE.Shader;
+  constructor() {
+    super();
+  }
+  onBeforeCompile(shader: THREE.Shader) {
+    this.shader = getShader(shader);
+  }
+  public set time(value: number) {
+    if (this.shader) this.shader.uniforms.time.value = -value;
+  }
+  public set depth(value: number) {
+    if (this.shader) this.shader.uniforms.depth.value = value;
+  }
+  public set frequency(value: number) {
+    if (this.shader) this.shader.uniforms.frequency.value = value;
+  }
+  public set resolution(value: number) {
+    if (this.shader) this.shader.uniforms.resolution.value = value;
   }
 }
 class NamiMaterial extends THREE.MeshPhongMaterial {
@@ -106,39 +174,7 @@ class NamiMaterial extends THREE.MeshPhongMaterial {
     });
   }
   onBeforeCompile(shader: THREE.Shader) {
-    // 追加分のユニフォーム達
-    const uniforms: {[key: string]: THREE.IUniform} = {
-      time: { value: 0 },
-      depth: { value: 0 },
-      frequency: { value: 0 },
-      resolution: { value: 0 }
-    }
-    // 挿入分のトランスフォームと法線計算処理。
-    const transform = `
-      vec3 transformed = position.xyz;
-      float t = 1.0 / resolution;
-      float x = position.x;
-      float y = position.y;
-      float mz = sin((pow2(x) + pow2(y) + time) * frequency);
-      float rz = sin((pow2(x + t) + pow2(y) + time) * frequency);
-      float lz = sin((pow2(x - t) + pow2(y) + time) * frequency);
-      float tz = sin((pow2(x) + pow2(y - t) + time) * frequency);
-      float bz = sin((pow2(x) + pow2(y + t) + time) * frequency);
-      objectNormal = normalize(vec3(0.0, 0.0, 0.0));
-      vNormal = normalMatrix * normalize(vec3((rz - lz) * depth, (tz - bz) * depth, depth+0.01));
-      transformed.z = mz * depth;
-    `;
-    // 元のユニフォーム群と合成
-    shader.uniforms = {
-      ...shader.uniforms,
-      ...uniforms
-    }
-    // 無理やり連結
-    shader.vertexShader = Object.keys(uniforms).map((n) => `uniform float ${n};\n`).join("") + shader.vertexShader;
-    // 無理やり挿入
-    shader.vertexShader = shader.vertexShader.replace("#include <begin_vertex>", transform);
-    // console.log(shader.vertexShader);
-    this.shader = shader;
+    this.shader = getShader(shader);
   }
   public set time(value: number) {
     if (this.shader) this.shader.uniforms.time.value = -value;
