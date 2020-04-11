@@ -31,12 +31,26 @@ export class P006Vertex extends Scene {
     max: 10,
     numberType: NumberType.FLOAT
   }
+  private paramSpecular: ParamData = {
+    name: "spec",
+    value: 0.1,
+    min: 0,
+    max: 1,
+    numberType: NumberType.FLOAT
+  }
+  private paramShiness: ParamData = {
+    name: "shiness",
+    value: 100,
+    min: 0,
+    max: 100,
+    numberType: NumberType.FLOAT
+  }
   public get description() {
     return "今回は法線を無理やり計算してみた。陰影がある！😀<br>ただ、思い付きで書いたから法線の求め方としては絶対におかしい😠";
   }
   constructor() {
     super();
-    this.paramDatas.push(this.paramDepth, this.paramFrequency, this.paramCameraDistance);
+    this.paramDatas.push(this.paramDepth, this.paramFrequency, this.paramCameraDistance, this.paramShiness, this.paramSpecular);
     this.camera = new THREE.PerspectiveCamera(
       70,   // fov
       1,    // aspect
@@ -50,7 +64,11 @@ export class P006Vertex extends Scene {
       this.material
     );
     this.camera.position.z = 1;
-    const light = new THREE.DirectionalLight(0xffffff, 1);
+    const light2 = new THREE.PointLight(0xFC7CB5, 1);
+    light2.position.z = 20;
+    light2.position.y = -20;
+    this.scene.add(light2);
+    const light = new THREE.PointLight(0x48FECB, 1);
     light.position.z = 20;
     light.position.y = 20;
     this.scene.add(light);
@@ -68,6 +86,8 @@ export class P006Vertex extends Scene {
     this.material.frequency = this.paramFrequency.value;
     this.material.depth = this.paramDepth.value;
     this.material.resolution = this.meshResolution;
+    this.material.specular = new THREE.Color().setRGB(this.paramSpecular.value, this.paramSpecular.value, this.paramSpecular.value);
+    this.material.shininess = this.paramShiness.value;
     this.camera.position.z = this.paramCameraDistance.value;
   }
   public resize(width: number, height: number) {
@@ -81,7 +101,8 @@ class NamiMaterial extends THREE.MeshPhongMaterial {
   constructor(texture: THREE.Texture) {
     super({
       map: texture,
-      shininess: 0
+      shininess: 0,
+      specular: 0
     });
   }
   onBeforeCompile(shader: THREE.Shader) {
