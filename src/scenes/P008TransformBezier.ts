@@ -152,9 +152,6 @@ export class P008TransformBezier extends Scene {
     this.generatedPoints.push(fa);
     this.geometry.setFromPoints(this.generatedPoints);
   }
-  public mouseDown() {
-    this.generateNextBezierPoints();
-  }
   public animate(deltaTime: number) {
     for (let i = 0; i < this.easingProgress.length; i++) {
       this.easingProgress[i] += deltaTime * 0.001 * this.easingSpeed.value;
