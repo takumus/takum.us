@@ -6,3 +6,4 @@ export * from './P005Texture';
 export * from './P006Vertex';
 export * from './P007Bezier';
 export * from './P008TransformBezier';
+export * from './P009MeshBezier';
