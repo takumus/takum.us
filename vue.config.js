@@ -10,5 +10,5 @@ module.exports = {
       })
     
   },
-  transpileDependencies: ['three', 'three-for-vue']
+  transpileDependencies: ['three', 'three-for-vue', 'cubic-bezier']
 }

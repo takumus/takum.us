@@ -33,12 +33,12 @@ body {
   flex-wrap: wrap;
   justify-content: center;
 }
-#nav a {
+a {
   font-weight: bold;
   color: #2c3e50;
   margin: 0px 4px;
 }
-#nav a.router-link-exact-active {
+a.router-link-exact-active {
   color: #ff9d41;
 }
 </style>

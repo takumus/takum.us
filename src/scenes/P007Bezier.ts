@@ -1,7 +1,5 @@
 import Scene from './scene';
 import * as THREE from "three";
-import { NumberType, ParamData } from '../params';
-import { Vector3, MeshNormalMaterial, MeshPhongMaterial } from 'three';
 export class P007Bezier extends Scene {
   private scene: THREE.Scene;
   private camera: THREE.PerspectiveCamera;
@@ -28,7 +26,7 @@ export class P007Bezier extends Scene {
 
     this.cylinder = new THREE.Mesh(
       new THREE.CylinderGeometry(0.03, 0.06, 0.2, 32),
-      new MeshPhongMaterial({
+      new THREE.MeshPhongMaterial({
         color: 0xCCCCCC,
         shininess: 100,
         specular: 0xffffff

@@ -10,6 +10,7 @@
     "deploy": "node ./scripts/deploy.js"
   },
   "dependencies": {
+    "@takumus/cubic-bezier": "^1.0.2",
     "@takumus/three-for-vue": "^1.0.10",
     "core-js": "^3.6.4",
     "node-sass": "^4.13.1",
