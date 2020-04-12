@@ -36,7 +36,7 @@ export class P007Bezier extends Scene {
     const light1 = new THREE.SpotLight(0x48FECB, 1, 100);
     const light2 = new THREE.PointLight(0xFC7CB5, 1, 100);
     light1.position.set(3, 3, 3);
-    light1.position.set(-3,-3,-3);
+    light2.position.set(-3,-3,-3);
     this.scene.add(light1, light2);
     this.scene.add(this.cylinder);
     // this.scene.add(new THREE.AmbientLight(0xffffff, 0.1));
