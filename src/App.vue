@@ -4,7 +4,7 @@
 
 <style lang="scss">
 span {
-  font-size: 15em;
+  font-size: 8em;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -13,7 +13,6 @@ span {
 body, html{
   width: 100%;
   height: 100%;
-  user-select: none;
   margin: 0px;
   padding: 0px;
   background-color: #ffffff;
