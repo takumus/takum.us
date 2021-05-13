@@ -1,19 +1,19 @@
 <template>
-  <div id="app">
-    hello
-  </div>
+  <span>{{emoji}}</span>
 </template>
 
 <style lang="scss">
-#app {
-  width: 100%;
-  height: 100%;
+span {
+  font-size: 15em;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 body, html{
   width: 100%;
   height: 100%;
   user-select: none;
-  text-align: center;
   margin: 0px;
   padding: 0px;
   background-color: #ffffff;
@@ -31,5 +31,10 @@ body, html{
 import { Options, Vue } from 'vue-class-component';
 @Options({
 })
-export default class App extends Vue {}
+export default class App extends Vue {
+  get emoji() {
+    const emojis = "😎,😀,🙂,😐,😷,🙁,😠".split(",");
+    return emojis[Math.floor(emojis.length * Math.random())];
+  }
+}
 </script>
