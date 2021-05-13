@@ -1,5 +1,5 @@
-const node_ssh = require('node-ssh');
-const ssh = new node_ssh();
+const { NodeSSH } = require('node-ssh');
+const ssh = new NodeSSH();
 let config = {};
 try {
   config = require('../local.deploy.config.js');
