@@ -12,9 +12,10 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - run: npm ci
-    - run: npm run build
-    - run: npm run deploy
+    - run: npm install yarn -g
+    - run: yarn
+    - run: yarn run build
+    - run: yarn run deploy
       env:
         DEPLOY_SERVER_PORT: ${{ secrets.DEPLOY_SERVER_PORT }}
         DEPLOY_SERVER_HOST: ${{ secrets.DEPLOY_SERVER_HOST }}

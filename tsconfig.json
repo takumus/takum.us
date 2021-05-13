@@ -1,20 +1,17 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "esnext",
     "module": "esnext",
     "strict": true,
     "jsx": "preserve",
     "importHelpers": true,
     "moduleResolution": "node",
     "experimentalDecorators": true,
+    "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "sourceMap": true,
     "baseUrl": ".",
-    "types": [
-      "webpack-env",
-      "node"
-    ],
     "paths": {
       "@/*": [
         "src/*"
@@ -28,7 +25,6 @@
     ]
   },
   "include": [
-    "src/assets/index.d.ts",
     "src/**/*.ts",
     "src/**/*.tsx",
     "src/**/*.vue",
