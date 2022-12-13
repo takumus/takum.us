@@ -2,10 +2,10 @@
   <div>
     <div class="container">
       <div class="parent" ref="parent"></div>
-      <div ref="params" v-show="paramsGUI!=null" class="params"></div>
+      <div ref="params" v-show="paramsGUI != null" class="params"></div>
     </div>
     <h4 v-html="description"></h4>
-    <a :href="url"><img src="../assets/github.png"></a>
+    <a :href="url"><img src="../assets/github.png" /></a>
   </div>
 </template>
 <style lang="scss" scoped>
@@ -44,9 +44,9 @@ img {
 </style>
 <script lang="ts">
 import * as scenes from "../scenes/";
-import Scene from '../scenes/scene';
+import Scene from "../scenes/scene";
 import { Component, Vue, Ref, Prop, Watch } from "vue-property-decorator";
-import { ParamsGUI } from '../params';
+import { ParamsGUI } from "../params";
 @Component
 export default class Viewer extends Vue {
   // refs
@@ -69,7 +69,7 @@ export default class Viewer extends Vue {
   resize() {
     const rect = this.parent.getBoundingClientRect();
     if (this.scene) {
-      const height = rect.width / this.scene.screenRatio
+      const height = rect.width / this.scene.screenRatio;
       this.parent.style.height = height + "px";
       this.scene.setSize(rect.width, height);
     }
@@ -90,7 +90,9 @@ export default class Viewer extends Vue {
   }
   createScene() {
     const sceneName = this.$route.params.id.toString();
-    const SceneClass = (scenes as  { [key: string]: { new(): Scene } })[sceneName];
+    const SceneClass = (scenes as { [key: string]: { new (): Scene } })[
+      sceneName
+    ];
     if (!SceneClass) {
       this.$router.push("/NotFound");
     }
@@ -104,7 +106,7 @@ export default class Viewer extends Vue {
       this.params.appendChild(this.paramsGUI.element);
     }
     this.description = this.scene.description;
-    this.url = `https://github.com/takumus/takum.us/blob/master/src/scenes/${sceneName}.ts`;
+    this.url = `https://github.com/takumus/takum.us/blob/three/src/scenes/${sceneName}.ts`;
     this.resize();
   }
   @Watch("$route")
